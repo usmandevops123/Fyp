@@ -1,10 +1,38 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
 import Proposals from "./Proposals";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  mainContainer: {
+    marginTop: 50,
+    display: "flex",
+    alignItems: "flex",
+    justifyContent: "center",
+    paddingRight: 100,
+    paddingLeft: 100,
+  },
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "flex",
+    justifyContent: "center",
+  },
+});
 
 const Statusproposal = () => {
   const [key, setKey] = useState("");
   const [yourlist, setYourlist] = useState([]);
+  const classes = useStyles();
+
   var ProposalsRef = firebase.database().ref("/Proposals");
   useEffect(() => {
     console.log("check");
@@ -29,27 +57,38 @@ const Statusproposal = () => {
   }, []);
 
   return (
-    <div>
-      {yourlist.map((data, uid) => {
-        if (data.uid === localStorage.getItem("token")) {
-          return (
-            <div>
-              <table>
-                <tr>
-                  <th> Title</th>
-                  <th>Status </th>
-                  <th> Progress</th>
-                </tr>
-                <tr>
-                  <td>{data.title}</td>
-                  <td>{data.status}</td>
-                  <td>{data.progress}</td>
-                </tr>
-              </table>
-            </div>
-          );
-        }
-      })}
+    <div className={classes.container}>
+      <Typography variant={"h4"} sx={{ padding: 5 }} align="center">
+        Proposal Status
+      </Typography>
+      <div className={classes.mainContainer}>
+        {yourlist.map((data, uid) => {
+          if (data.uid === localStorage.getItem("token")) {
+            return (
+              <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 300 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Title</TableCell>
+                      <TableCell align="right">Status</TableCell>
+                      <TableCell align="right">Progress</TableCell>
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    <TableRow>
+                      <TableCell component="th" scope="row">
+                        {data.title}
+                      </TableCell>
+                      <TableCell align="right">{data.status}</TableCell>
+                      <TableCell align="right">{data.progress}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            );
+          }
+        })}
+      </div>
     </div>
   );
 };

@@ -29,13 +29,27 @@ const App = () => {
           <PrivateRoute exact path="/teacher" component={TeacherHome} />
           <PrivateRoute exact path="/proposals" component={Proposals} />
           <PrivateRoute exact path="/getproposals" component={Getproposals} />
-          <PrivateRoute exact path="/enrollstudent" component={EnrolledStudent} />
+          <PrivateRoute
+            exact
+            path="/enrollstudent"
+            component={EnrolledStudent}
+          />
           <PrivateRoute exact path="/users" component={Users} />
-          <PrivateRoute exact path="/admingetproposals" component={AdminGetproposals} />
-          <PrivateRoute exact path="/adminprofile" component={AdminOwnprofile} />
-          <PrivateRoute exact path="/studentownprofile" component={StudentOwnprofile} />
-
-
+          <PrivateRoute
+            exact
+            path="/admingetproposals"
+            component={AdminGetproposals}
+          />
+          <PrivateRoute
+            exact
+            path="/adminprofile"
+            component={AdminOwnprofile}
+          />
+          <PrivateRoute
+            exact
+            path="/studentownprofile"
+            component={StudentOwnprofile}
+          />
 
           <PrivateRoute
             exact

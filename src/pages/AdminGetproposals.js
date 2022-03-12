@@ -1,9 +1,27 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
+import {
+  TableContainer,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  Paper,
+  Typography,
+} from "@mui/material";
+import { makeStyles } from "@mui/styles";
+
+const useStyles = makeStyles({
+  mainContainer: {
+    padding: 10,
+  },
+});
 
 const AdminGetproposals = () => {
   const [key, setKey] = useState("");
   const [mylist, setMylist] = useState([]);
+  const classes = useStyles();
 
   var ProposalsRef = firebase.database().ref("/Proposals");
   useEffect(() => {
@@ -33,35 +51,42 @@ const AdminGetproposals = () => {
   }, []);
 
   return (
-    <div>
-      <div className="Card">
-        <table>
-          <tr>
-            <th>StudentName</th>
-            <th>Studentclass</th>
-            <th>Title</th>
-            <th>Details </th>
-            <th>Supervisor</th>
-            <th>Co-supervisor </th>
-            <th>Status</th>
-            <th>Progress</th>
-          </tr>
-          {mylist.map((data) => {
-            return (
-              <tr>
-                <td>{data.studentname}</td>
-                <td>{data.Studentclass}</td>
-                <td>{data.title}</td>
-                <td>{data.details}</td>
-                <td>{data.supervisor}</td>
-                <td>{data.cosupervisor}</td>
-                <td>{data.status}</td>
-                <td>{data.progress}</td>
-              </tr>
-            );
-          })}
-        </table>
-      </div>
+    <div className={classes.mainContainer}>
+      <Typography sx={{ marginBottom: 5 }} variant="h4">
+        Proposal Details
+      </Typography>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 350 }} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell>Student Name</TableCell>
+              <TableCell>Student Class</TableCell>
+              <TableCell>Title</TableCell>
+              <TableCell>Details </TableCell>
+              <TableCell>Supervisor </TableCell>
+              <TableCell>Co-supervisor</TableCell>
+              <TableCell>Status</TableCell>
+              <TableCell>Progress</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {mylist.map((data) => {
+              return (
+                <TableRow>
+                  <TableCell>{data.studentname}</TableCell>
+                  <TableCell>{data.Studentclass}</TableCell>
+                  <TableCell>{data.title}</TableCell>
+                  <TableCell>{data.details}</TableCell>
+                  <TableCell>{data.supervisor}</TableCell>
+                  <TableCell>{data.cosupervisor}</TableCell>
+                  <TableCell>{data.status}</TableCell>
+                  <TableCell>{data.progress}</TableCell>
+                </TableRow>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 };

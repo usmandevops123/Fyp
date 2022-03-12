@@ -1,5 +1,19 @@
 import React, { useState, useEffect } from "react";
 import firebase from "firebase";
+import { Card, CardContent, Typography } from "@mui/material";
+import { makeStyles } from "@mui/styles";
+const useStyles = makeStyles({
+  container: {
+    marginTop: 100,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  data: {
+    display: "flex",
+    alignItems: "center",
+  },
+});
 
 const Teacherprofile = () => {
   var amountRef = firebase.database().ref("/users");
@@ -29,35 +43,59 @@ const Teacherprofile = () => {
     });
   }, []);
 
+  const classes = useStyles();
   return (
-    <div>
-      {ourlist.map((data, uid) => {
-        if (data.uid === localStorage.getItem("token")) {
-          return (
-            <div>
-              <table>
-                <tr>
-                  <th> Domain</th>
-                  <th>Email </th>
-                  <th> Name </th>
-                  <th> Phone</th>
-                  <th> Role</th>
-                  <th> Roll</th>
-                </tr>
-                <tr>
-                  <td>{data.domain}</td>
-                  <td>{data.email}</td>
-                  <td>{data.name}</td>
-                  <td>{data.phone}</td>
-                  <td>{data.role}</td>
-                  <td>{data.roll}</td>
-                </tr>
-              </table>
-            </div>
-          );
-        }
-      })}
-    </div>
+    <>
+      <Typography align="center" variant="h4">
+        Teacher Profile
+      </Typography>
+      <div className={classes.container}>
+        <Card
+          sx={{
+            minWidth: 500,
+            minHeight: 300,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <CardContent>
+            {ourlist.map((data, uid) => {
+              if (data.uid === localStorage.getItem("token")) {
+                return (
+                  <div>
+                    <div className={classes.data}>
+                      <Typography sx={{ marginRight: 5 }}>Domain:</Typography>
+                      <Typography> {data.domain}</Typography>
+                    </div>
+                    <div className={classes.data}>
+                      <Typography sx={{ marginRight: 5 }}>Name:</Typography>
+                      <Typography> {data.name}</Typography>
+                    </div>
+                    <div className={classes.data}>
+                      <Typography sx={{ marginRight: 5 }}>Email:</Typography>
+                      <Typography> {data.email}</Typography>
+                    </div>
+                    <div className={classes.data}>
+                      <Typography sx={{ marginRight: 5 }}>Phone:</Typography>
+                      <Typography> {data.phone}</Typography>
+                    </div>
+                    <div className={classes.data}>
+                      <Typography sx={{ marginRight: 5 }}>Role:</Typography>
+                      <Typography> {data.role}</Typography>
+                    </div>
+                    <div className={classes.data}>
+                      <Typography sx={{ marginRight: 5 }}>Roll #:</Typography>
+                      <Typography> {data.roll}</Typography>
+                    </div>
+                  </div>
+                );
+              }
+            })}
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 };
 
